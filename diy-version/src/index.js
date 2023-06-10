@@ -5,5 +5,8 @@ import App from "./App";
 
 hydrateRoot(
   document.getElementById("app"),
-  <App comments={[]} description={""} />
+  <App
+    comments={window.__data.comments}
+    description={window.__data.description}
+  />
 );

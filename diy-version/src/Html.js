@@ -9,6 +9,14 @@ export default ({ children, comments, description }) => {
       <body>
         <div id="app">{children}</div>
       </body>
+      <script
+        dangerouslySetInnerHTML={{
+          __html: `window.__data = ${JSON.stringify({
+            description,
+            comments,
+          })};`,
+        }}
+      ></script>
       <script src="/main.js"></script>
     </html>
   );
