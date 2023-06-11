@@ -1,5 +1,5 @@
 import * as React from "react";
-import { renderToString } from "react-dom/server";
+import { renderToPipeableStream } from "react-dom/server";
 
 import Html from "../src/Html";
 import App from "../src/App";
@@ -16,14 +16,17 @@ const commentsFetch = () =>
 
 async function render(res) {
   const description = await fetchDescription();
-  const comments = await commentsFetch();
+  const comments = commentsFetch();
 
-  res.send(
-    renderToString(
-      <Html description={description} comments={comments}>
-        <App description={description} comments={comments} />
-      </Html>
-    )
+  const stream = renderToPipeableStream(
+    <Html description={description} comments={comments}>
+      <App description={description} comments={comments} />
+    </Html>,
+    {
+      onShellReady() {
+        stream.pipe(res);
+      },
+    }
   );
 }
 

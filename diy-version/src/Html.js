@@ -13,11 +13,9 @@ export default ({ children, comments, description }) => {
         dangerouslySetInnerHTML={{
           __html: `window.__data = ${JSON.stringify({
             description,
-            comments,
           })};`,
         }}
       ></script>
-      <script src="/main.js"></script>
     </html>
   );
 };

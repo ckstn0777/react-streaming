@@ -1,9 +1,9 @@
 import * as React from "react";
-import { useState } from "react";
+import { useState, use, Suspense } from "react";
 
-function Comments({ comments: originalComments }) {
+function Comments({ comments: commentsPromise }) {
   const [comment, setComment] = useState("");
-  const [comments, setComments] = useState(originalComments);
+  const [comments, setComments] = useState(use(commentsPromise));
 
   return (
     <div>
@@ -39,7 +39,9 @@ export default function App(props) {
       <p>{props.description}</p>
 
       <h2>Comments</h2>
-      <Comments comments={props.comments} />
+      <Suspense fallback={<div>Loading...</div>}>
+        <Comments comments={props.comments} />
+      </Suspense>
 
       <footer>Footer</footer>
     </>
